@@ -1,3 +1,5 @@
+//Index.js
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -20,7 +22,7 @@ router.get('/movies', function(req, res) {
     res.render('movies', {'movies': movies, searchExists: searchExists, director: req.query.director });
   });
 });
-
+/*
 router.post('/movies/create', function(req, res) {
   (new Movie({
       title: req.body.movieTitle,
@@ -34,5 +36,29 @@ router.post('/movies/create', function(req, res) {
 router.get('/movies/create', function(req, res) {
   res.render('movies-create', {}); 
 });
+*/
+
+router.get('/api/movies', function(req, res){
+	Movie.find({director: req.body.movieDirector}, (err, movies) => {
+		res.json(movies);
+	});	
+});
+
+router.post('/api/movies', function(req, res){
+	(new Movie({
+		title: req.body.movieTitle,
+		director: req.body.movieDirector,
+		year: req.body.movieYear
+	})).save((err, movie) => {
+		if(err){
+			console.log(err);
+			res.json(err);
+		} else{
+			res.json(movie);
+		}
+	});
+});
+
+
 
 module.exports = router;
