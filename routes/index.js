@@ -38,13 +38,16 @@ router.get('/movies/create', function(req, res) {
 });
 */
 
-router.get('/api/movies', function(req, res){
-	Movie.find({director: req.body.movieDirector}, (err, movies) => {
+router.get('/api/movies/create', function(req, res){
+/*	Movie.find({director: req.body.movieDirector}, (err, movies) => {
 		res.json(movies);
-	});	
+	});	*/
+	Movie.find({}, (err, movies) => {
+		res.json(movies);
+	});
 });
 
-router.post('/api/movies', function(req, res){
+router.post('/api/movies/create', function(req, res){
 	(new Movie({
 		title: req.body.movieTitle,
 		director: req.body.movieDirector,
@@ -59,6 +62,15 @@ router.post('/api/movies', function(req, res){
 	});
 });
 
-
+router.get('/api/movies', function(req, res){
+	Movie.find({director: req.query.director}, (err, movies) => {
+		if(err){
+			console.log(err);
+			res.json(err);
+		} else{
+			res.json(movies);
+		}
+	});
+});
 
 module.exports = router;
