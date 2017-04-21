@@ -8,7 +8,6 @@ function handleButtonClick(evt){
 	const movieTitle = document.querySelector('#movieTitle').value;
 	const movieDirector = document.querySelector('#movieDirector').value;
 	const movieYear = document.querySelector('#movieYear').value;
-	
 	const data = `movieTitle=${movieTitle}&movieDirector=${movieDirector}&movieYear=${movieYear}`;
 	//alert(data);
 	req.send(data);
@@ -42,12 +41,17 @@ function getMovies(){
 function handleFilterClick(evt){
 	evt.preventDefault();
 	const req = new XMLHttpRequest();
+	const data = document.getElementById('director').value;
+	alert(data);
 	req.open('GET', '/api/movies');
+	//req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	req.addEventListener('load', function handleFilter(){
+		console.log(req,status);
 		if(req.status >= 200 && req.status < 400){
 			const div = document.querySelector('#movie-list');
 			div.innerHTML = '';
 			const movies = JSON.parse(req.responseText);
+			alert(req.responseText);
 			movies.forEach((m) => {
 				const tr = document.createElement('tr');
 				const td = document.createElement('td');
@@ -69,6 +73,7 @@ function handleFilterClick(evt){
 			setTimeout(handleFilterClick, 2000);
 		}
 	});
+//	alert(req.query.director);
 	req.send();
 }
 
@@ -77,6 +82,7 @@ function main(){
 	//	const filter = document.querySelectorAll('input[type="submit"]')[0];
 	const filter = document.getElementById('filterBtn');
 	console.log("FILTER", filter);
+	alert("HHHHHH");
 	filter.addEventListener('click', handleFilterClick);
 	const btn = document.querySelectorAll('input[type="submit"]')[1];	
 	console.log(btn);

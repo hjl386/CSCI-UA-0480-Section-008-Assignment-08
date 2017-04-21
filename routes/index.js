@@ -63,7 +63,7 @@ router.post('/api/movies/create', function(req, res){
 });
 
 router.get('/api/movies', function(req, res){
-	Movie.find({director: req.query.director}, (err, movies) => {
+	Movie.find({director: req.body.director}, (err, movies) => {
 		if(err){
 			console.log(err);
 			res.json(err);
