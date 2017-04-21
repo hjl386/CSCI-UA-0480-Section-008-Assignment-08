@@ -62,8 +62,9 @@ router.post('/api/movies/create', function(req, res){
 	});
 });
 
+/*
 router.get('/api/movies', function(req, res){
-	Movie.find({director: req.body.director}, (err, movies) => {
+	Movie.find({director: req.query.director}, (err, movies) => {
 		if(err){
 			console.log(err);
 			res.json(err);
@@ -72,5 +73,21 @@ router.get('/api/movies', function(req, res){
 		}
 	});
 });
+*/
 
+router.get('/api/movies', function(req, res){
+//	const f = {};
+	//if(req.query.director){
+		
+//	}
+	Movie.find({director: req.query.director}, function(err, movies, ecount){
+		res.json(movies.map(function(ele) {
+			return {
+				'title': ele.title,
+				'director': ele.director,
+				'year': ele.year
+			}
+		}));
+	});
+});
 module.exports = router;
