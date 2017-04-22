@@ -11,7 +11,7 @@ function add(evt){
 	const movieYear = document.querySelector('#movieYear').value;
 	const data = `movieTitle=${movieTitle}&movieDirector=${movieDirector}&movieYear=${movieYear}`;
 	req.send(data);
-	req.addEventListener('load', function(eve){
+	req.addEventListener('load', function(){
 		getMovies();
 	});	
 }
@@ -37,6 +37,9 @@ function getMovies(){
 			});
 		}	
 	});
+	req.addEventListener('error', function(){
+		console.log("ERROR");
+	});
 	req.send();
 }
 
@@ -45,7 +48,7 @@ function filter(evt){
 	const req = new XMLHttpRequest();
 	let url = 'http://localhost:3000/api/movies';
 	const director = document.getElementById('director').value;
-	console.log(director, "FILTERMOVIES");
+	console.log(director+"FILTERMOVIES");
 	if(director){
 		url += '?director=' + director;
 	}
@@ -56,7 +59,7 @@ function filter(evt){
 			const data = JSON.parse(req.responseText);
 		//	const movieList = document.querySelector('#movie-List');
 			const movieList = document.getElementById('movie-list');
-		   movieList.innerHTML = '';
+		  	movieList.innerHTML = '';
 			data.forEach((m) => {
 				const tr = document.createElement('tr');
 				const td = document.createElement('td');

@@ -86,10 +86,23 @@ router.get('/api/movies', function(req, res){
 //	}
 //	Movie.find({director: req.query.director}, function(err, movies, ecount){
 	Movie.find({director: {$eq: req.query.director}}, function(err, movies, count){
+		console.log(movies);
 		if(err){
 			console.log(err);
 			res.json(err);
-		} else{
+		}else if(movies.length === 0){
+			console.log("IN HERE");
+			Movie.find({}, function(err, m){
+				res.json(m.map(function(ele){
+					return{
+						'title': ele.title,
+						'director': ele.director,
+						'year': ele.year		
+					}
+				}));
+			});
+		}else{
+			console.log("ELSE");
 			res.json(movies.map(function(ele) {
 				return {
 					'title': ele.title,
