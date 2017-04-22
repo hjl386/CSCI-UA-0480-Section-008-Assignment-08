@@ -77,17 +77,27 @@ router.get('/api/movies', function(req, res){
 
 router.get('/api/movies', function(req, res){
 //	const f = {};
+	//console.log('Test');
+	//console.log(req);
 	//if(req.query.director){
-		
+	//console.log(req.query.director);
+	//console.log("HGUOEWHGLQEGNLGNQ");
+	//console.log(req.body.director);
 //	}
-	Movie.find({director: req.query.director}, function(err, movies, ecount){
-		res.json(movies.map(function(ele) {
-			return {
-				'title': ele.title,
-				'director': ele.director,
-				'year': ele.year
-			}
-		}));
+//	Movie.find({director: req.query.director}, function(err, movies, ecount){
+	Movie.find({director: {$eq: req.query.director}}, function(err, movies, count){
+		if(err){
+			console.log(err);
+			res.json(err);
+		} else{
+			res.json(movies.map(function(ele) {
+				return {
+					'title': ele.title,
+					'director': ele.director,
+					'year': ele.year
+				}
+			}));
+		}
 	});
 });
 module.exports = router;
