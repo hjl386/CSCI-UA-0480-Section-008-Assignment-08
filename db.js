@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Movie = mongoose.Schema({
+const Movie = mongoose.Schema({
   title: String,
   director: String,
   year: Number
